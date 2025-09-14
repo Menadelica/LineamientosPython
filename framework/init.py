@@ -10,6 +10,14 @@ import sys
 from pathlib import Path
 from typing import Dict, Any, List
 
+# Cargar variables de entorno desde .env si existe
+try:
+    from dotenv import load_dotenv
+    load_dotenv()  # Esto carga automáticamente el archivo .env
+except ImportError:
+    # Si no está instalado python-dotenv, continúa sin problemas
+    pass
+
 
 def load_config(config_path: str = "config/settings.json") -> Dict[str, Any]:
     """
