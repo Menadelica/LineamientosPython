@@ -1,2 +1,3 @@
 id,prompt,context,expected_output
 1,"Crea un flujo de UiPath para automatizar el proceso de login en una aplicación web","Sistema web con autenticación de usuario y contraseña","Flujo detallado de automatización con manejo de errores y validaciones"
+2,"Cómo leer datos de un archivo Excel con UiPath","Archivo Excel con múltiples hojas","Código UiPath para leer Excel"
