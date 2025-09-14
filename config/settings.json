@@ -1,0 +1,22 @@
+{
+    "gemini": {
+        "model": "gemini-2.5-pro",
+        "thinking_budget": -1,
+        "system_instruction": "Eres un agente especializado en flujos de UiPath y automatizaciones"
+    },
+    "logging": {
+        "level": "INFO",
+        "format": "%(asctime)s - %(name)s - %(levelname)s - %(message)s",
+        "file": "data/output/automation.log"
+    },
+    "processing": {
+        "max_retries": 3,
+        "retry_delay": 5,
+        "batch_size": 10
+    },
+    "paths": {
+        "input_data": "data/input/prompts.csv",
+        "output_data": "data/output/results.csv",
+        "logs": "data/output/"
+    }
+}

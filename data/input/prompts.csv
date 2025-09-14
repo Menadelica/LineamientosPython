@@ -1,0 +1,6 @@
+id,prompt,context,expected_output
+1,"Crea un flujo de UiPath para automatizar el proceso de facturación en SAP","Sistema SAP con interfaz web y base de datos Oracle","Diagrama de flujo detallado con pasos específicos y manejo de excepciones"
+2,"Diseña una automatización para procesar emails entrantes con archivos adjuntos","Cliente de email corporativo Exchange con filtros de spam","Workflow con decisiones condicionales y extracción de archivos adjuntos"
+3,"Implementa un flujo para integración con APIs REST externas","API REST con autenticación OAuth 2.0 y rate limiting","Secuencia de llamadas HTTP con manejo de errores y reintentos"
+4,"Automatiza el procesamiento de documentos PDF con OCR","Documentos PDF escaneados con texto no seleccionable","Flujo de OCR con validación de datos extraídos"
+5,"Crea una automatización para actualización de base de datos desde Excel","Archivos Excel con múltiples hojas y validaciones de datos","Workflow de importación con validación y transformación de datos"

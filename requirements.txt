@@ -1,0 +1,26 @@
+# Dependencias para automatización de generación de prompts con Gemini
+# Basado en Python REFramework
+
+# API de Google Gemini
+google-genai>=0.8.0
+
+# Utilidades estándar (incluidas en Python 3.8+)
+# json - incluido en Python estándar
+# logging - incluido en Python estándar  
+# csv - incluido en Python estándar
+# datetime - incluido en Python estándar
+# pathlib - incluido en Python estándar
+# typing - incluido en Python estándar
+# os - incluido en Python estándar
+# sys - incluido en Python estándar
+
+# Para desarrollo y testing
+pytest>=7.0.0
+pytest-cov>=4.0.0
+
+# Para formateo y linting (opcional)
+black>=22.0.0
+flake8>=5.0.0
+
+# Para manejo de variables de entorno (alternativa a .env)
+python-dotenv>=1.0.0
