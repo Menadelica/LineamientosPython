@@ -1,55 +1,143 @@
-# Python REFramework (Mock)
+# 📌 Lineamientos de Desarrollo en Python para Automatizaciones
 
-Resumen de lineamientos para automatizaciones en Python inspiradas en UiPath REFramework.
+## 🎯 Objetivo
 
-## Objetivo
-- Establecer prácticas claras para calidad, mantenibilidad y soporte.
+Definir prácticas claras y estandarizadas para el desarrollo de
+automatizaciones en Python, asegurando calidad, mantenibilidad y
+facilidad de soporte, mediante un framework inspirado en el
+**REFramework** de UiPath.
 
-## Principios
-- PEP8, nombres descriptivos, funciones cortas y de única responsabilidad.
-- Manejo de errores con try/except y logging estructurado.
-- Configuración externa (.env, JSON, YAML o variables de entorno).
-- Logs con niveles DEBUG/INFO/ERROR, trazables.
-- Pruebas con pytest; validar en staging antes de prod.
+------------------------------------------------------------------------
 
-## Estructura
+## 🔑 Principios Generales
+
+### 🧼 Código limpio y legible
+
+-   Cumplir el estándar **PEP8**.
+-   Usar nombres descriptivos en variables, clases y funciones.
+-   Agregar comentarios solo cuando sean necesarios: el código debe ser
+    autoexplicativo.
+
+### 🧩 Estructura modular
+
+-   Dividir la lógica en módulos reutilizables.
+-   Funciones cortas y con una sola responsabilidad.
+
+### 🛠️ Manejo de errores
+
+-   Usar `try/except` con logging estructurado.
+-   Diferenciar errores de sistema (infraestructura, red, librerías) de
+    errores de negocio (datos inválidos, flujo esperado).
+
+### ⚙️ Configuración externa
+
+-   No incluir credenciales ni rutas en el código.
+-   Usar archivos `.env`, JSON, YAML o variables de entorno.
+
+### 📜 Logs y monitoreo
+
+-   Implementar logging con niveles (**DEBUG**, **INFO**, **ERROR**).
+-   Generar logs fáciles de rastrear para soporte y auditoría.
+
+### 🧪 Pruebas y calidad
+
+-   Escribir pruebas unitarias con **pytest**.
+-   Validar en staging antes de pasar a producción.
+
+------------------------------------------------------------------------
+
+## 🏗️ Python REFramework (Adaptación)
+
+Estructura base del framework, inspirada en UiPath REFramework:
+
+    automation_project/
+    │
+    ├── config/
+    │   ├── settings.json        # Configuración general
+    │   ├── credentials.json     # Credenciales (encriptadas o mock)
+    │
+    ├── data/
+    │   ├── input/               # Archivos de entrada
+    │   └── output/              # Resultados
+    │
+    ├── framework/
+    │   ├── init.py              # Inicialización: logs, configs, colas
+    │   ├── get_transaction.py   # Obtención de ítems a procesar
+    │   ├── process.py           # Lógica principal de negocio
+    │   ├── handle_error.py      # Manejo de excepciones
+    │   └── end.py               # Limpieza y cierre
+    │
+    ├── tests/
+    │   └── test_process.py      # Pruebas unitarias
+    │
+    ├── main.py                  # Punto de entrada
+    └── requirements.txt         # Dependencias
+
+------------------------------------------------------------------------
+
+## 🔄 Fases del Flujo
+
+1.  **Initialization**\
+    Cargar configuraciones y credenciales. Preparar logging. Verificar
+    dependencias (APIs, DB, rutas de archivos).
+
+2.  **Get Transaction Data**\
+    Obtener ítems de entrada (archivos, registros, requests). Validar
+    datos antes de procesar.
+
+3.  **Process Transaction**\
+    Ejecutar la lógica de negocio para cada ítem.\
+    Devolver estado: `Success`, `BusinessException`, `SystemException`.
+
+4.  **Handle Errors**
+
+    -   **BusinessException:** registrar y marcar ítem como fallo
+        controlado.\
+    -   **SystemException:** reintentar o escalar.\
+        Siempre dejar trazabilidad clara en los logs.
+
+5.  **End Process**\
+    Generar reporte final de ejecución.\
+    Cerrar conexiones, liberar recursos.
+
+------------------------------------------------------------------------
+
+## 📝 Ejemplo simplificado (`main.py`)
+
+``` python
+from framework import init, get_transaction, process, handle_error, end
+
+if __name__ == "__main__":
+    config = init.load_config()
+    queue = init.load_queue("data/input/data.csv")
+
+    for item in queue:
+        try:
+            tx = get_transaction.run(item)
+            result = process.run(tx, config)
+            print(f"[OK] {item} -> {result}")
+        except Exception as e:
+            handle_error.run(item, e)
+
+    end.run()
 ```
-automation_project/
-├── config/
-│   ├── settings.json
-│   └── credentials.json
-├── data/
-│   ├── input/
-│   └── output/
-├── framework/
-│   ├── init.py
-│   ├── get_transaction.py
-│   ├── process.py
-│   ├── handle_error.py
-│   └── end.py
-├── tests/
-│   └── test_process.py
-├── main.py
-└── requirements.txt
-```
 
-## Flujo
-1) Initialization: cargar config/credenciales, preparar logging, verificar dependencias.
-2) Get Transaction Data: obtener y validar ítems de entrada.
-3) Process Transaction: lógica de negocio; estados: Success, BusinessException, SystemException.
-4) Handle Errors: registrar; reintentar o escalar según tipo.
-5) End Process: reporte final y liberación de recursos.
+------------------------------------------------------------------------
 
-## Buenas prácticas
-- Git con ramas feature/, fix/, release/.
-- Entornos virtuales: venv o poetry.
-- Documentar: README con dependencias, pasos y diagrama.
-- Estandarizar: todos los proyectos siguen esta estructura.
+## 🚦 Buenas Prácticas Adicionales
 
-## Ejecución (mock)
-- python main.py
-- pytest -q
+-   **Versionamiento:** usar Git con ramas claras (`feature/`, `fix/`,
+    `release/`).
+-   **Entornos virtuales:** crear con `venv` o `poetry`.
+-   **Documentación mínima:** incluir `README` con dependencias, pasos
+    de ejecución y diagrama de flujo.
+-   **Estandarización:** todos los proyectos deben seguir esta misma
+    estructura.
 
-## Dependencias
-- pytest
+------------------------------------------------------------------------
 
+## ✅ Conclusión
+
+Este marco asegura que todas las automatizaciones en Python tengan
+**orden**, **trazabilidad**, sean **fáciles de mantener** y permitan
+**escalar de manera segura** dentro del equipo.
