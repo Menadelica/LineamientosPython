@@ -70,35 +70,16 @@ def load_credentials() -> Dict[str, str]:
 
 
 def setup_logging(config: Dict[str, Any]) -> logging.Logger:
-    """
-    Configura el sistema de logging
-    
-    Args:
-        config: Configuración del framework
-        
-    Returns:
-        Logger configurado
-    """
+    """Configura el sistema de logging"""
     log_config = config['logging']
-    
-    # Configurar formato
-    formatter = logging.Formatter(log_config['format'])
-    
-    # Configurar logger principal
     logger = logging.getLogger('gemini_automation')
-    logger.setLevel(getattr(logging, log_config['level']))
     
-    # Evitar duplicar handlers
     if not logger.handlers:
         # Handler para archivo
         file_handler = logging.FileHandler(log_config['file'], encoding='utf-8')
-        file_handler.setFormatter(formatter)
+        file_handler.setFormatter(logging.Formatter(log_config['format']))
         logger.addHandler(file_handler)
-        
-        # Handler para consola
-        console_handler = logging.StreamHandler(sys.stdout)
-        console_handler.setFormatter(formatter)
-        logger.addHandler(console_handler)
+        logger.setLevel(getattr(logging, log_config['level']))
     
     return logger
 

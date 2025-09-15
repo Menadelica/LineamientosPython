@@ -3,40 +3,24 @@ Módulo principal de procesamiento de transacciones
 Contiene la lógica de negocio para generar prompts con Gemini
 """
 
-import logging
-import os
 from typing import Dict, Any, Tuple
 from google import genai
 from google.genai import types
+from .utils import classify_error, setup_logger
 
 
 class GeminiProcessor:
     """Clase para procesar prompts con Gemini API"""
     
     def __init__(self, config: Dict[str, Any], credentials: Dict[str, str]):
-        """
-        Inicializa el procesador de Gemini
-        
-        Args:
-            config: Configuración del framework
-            credentials: Credenciales de API
-        """
-        self.logger = logging.getLogger('gemini_automation.process')
+        self.logger = setup_logger('process')
         self.config = config
         self.credentials = credentials
-        self.client = None
-        self._initialize_client()
+        self.client = self._initialize_client()
     
-    def _initialize_client(self) -> None:
+    def _initialize_client(self):
         """Inicializa el cliente de Gemini"""
-        try:
-            self.client = genai.Client(
-                api_key=self.credentials['gemini_api_key']
-            )
-            self.logger.info("Cliente de Gemini inicializado correctamente")
-        except Exception as e:
-            self.logger.error(f"Error al inicializar cliente de Gemini: {e}")
-            raise
+        return genai.Client(api_key=self.credentials['gemini_api_key'])
     
     def process_transaction(self, transaction: Dict[str, Any]) -> Tuple[str, str]:
         """
@@ -65,7 +49,7 @@ class GeminiProcessor:
             return 'Success', result
             
         except Exception as e:
-            error_type = self._classify_error(e)
+            error_type = classify_error(e)
             self.logger.error(f"Error en transacción {transaction['id']}: {e}")
             return error_type, str(e)
     
@@ -179,31 +163,6 @@ class GeminiProcessor:
             }
         }
     
-    def _classify_error(self, error: Exception) -> str:
-        """
-        Clasifica el error como BusinessException o SystemException
-        
-        Args:
-            error: Excepción ocurrida
-            
-        Returns:
-            Tipo de error clasificado
-        """
-        # Errores de sistema (infraestructura, API, red)
-        system_errors = [
-            'ConnectionError',
-            'TimeoutError', 
-            'APIError',
-            'AuthenticationError',
-            'RateLimitError'
-        ]
-        
-        error_type = type(error).__name__
-        if any(sys_error in error_type for sys_error in system_errors):
-            return 'SystemException'
-        
-        # Errores de negocio (datos inválidos, lógica de negocio)
-        return 'BusinessException'
 
 
 def run(transaction: Dict[str, Any], config: Dict[str, Any]) -> Tuple[str, str]:
