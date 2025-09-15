@@ -1,11 +1,8 @@
-# 📌 Lineamientos de Desarrollo en Python para Automatizaciones Comfama
+#  Lineamientos - Desarrollo - Python 
 
 ## 🎯 Objetivo
 
-Definir prácticas claras y estandarizadas para el desarrollo de
-automatizaciones en Python, asegurando calidad, mantenibilidad y
-facilidad de soporte, mediante un framework inspirado en el
-**REFramework** de UiPath.
+Establecer y aplicar prácticas estandarizadas para el desarrollo en Python, promoviendo la colaboración entre equipos de desarrollo, QA y soporte. Esto garantizará la calidad, mantenibilidad y facilidad de soporte del código, mediante la implementación de un framework inspirado en el REFramework de UiPath.
 
 ------------------------------------------------------------------------
 
@@ -13,26 +10,24 @@ facilidad de soporte, mediante un framework inspirado en el
 
 ### 🧼 Código limpio y legible
 
--   Cumplir el estándar **PEP8**.
--   Usar nombres descriptivos en variables, clases y funciones.
--   Agregar comentarios solo cuando sean necesarios: el código debe ser
-    autoexplicativo.
+Seguir el estándar [PEP 8](https://peps.python.org/pep-0008/?utm_source=chatgpt.com), la guía oficial de estilo para Python que define convenciones para la indentación, nombres de variables, longitud de líneas, organización de funciones y comentarios. 
 
 ### 🧩 Estructura modular
 
--   Dividir la lógica en módulos reutilizables.
--   Funciones cortas y con una sola responsabilidad.
+Organiza el código en módulos reutilizables y funciones con única responsabilidad, mejorando legibilidad, mantenimiento, pruebas y escalabilidad.
 
 ### 🛠️ Manejo de errores
 
--   Usar `try/except` con logging estructurado.
--   Diferenciar errores de sistema (infraestructura, red, librerías) de
-    errores de negocio (datos inválidos, flujo esperado).
+Usa try/except con logging estructurado y diferencia:
+
+- 🖧 Errores de sistema → 🔁 reintentar o escalar.
+- 📊 Errores de negocio → 📝 registrar y continuar.
 
 ### ⚙️ Configuración externa
 
--   No incluir credenciales ni rutas en el código.
--   Usar archivos `.env`, JSON, YAML o variables de entorno.
+- No incluyas credenciales ni rutas sensibles en el código.
+- Usa archivos .env, JSON, YAML o variables de entorno.
+- Mantén estos archivos fuera del control de versiones y ofrecer un .env.example.
 
 ### 📜 Logs y monitoreo
 
@@ -41,8 +36,9 @@ facilidad de soporte, mediante un framework inspirado en el
 
 ### 🧪 Pruebas y calidad
 
--   Escribir pruebas unitarias con **pytest**.
--   Validar en staging antes de pasar a producción.
+- Escribe pruebas unitarias con [pytest](https://docs.pytest.org/en/stable/contents.html?utm_source=chatgpt.com).
+
+- Valida los cambios en un entorno de prueba staging antes de desplegar.
 
 ------------------------------------------------------------------------
 
@@ -75,30 +71,14 @@ Estructura base del framework, inspirada en UiPath REFramework:
 
 ------------------------------------------------------------------------
 
-## 🔄 Fases del Flujo
+## 🔄 Fases del Flujo  
 
-1.  **Initialization**\
-    Cargar configuraciones y credenciales. Preparar logging. Verificar
-    dependencias (APIs, DB, rutas de archivos).
+1. **Initialization** – Configuraciones, credenciales, logging y verificación de dependencias.  
+2. **Get Transaction Data** – Obtener y validar ítems de entrada.  
+3. **Process Transaction** – Ejecutar lógica de negocio, devolver `Success`, `BusinessException` o `SystemException`.  
+4. **Handle Errors** – Registrar excepciones. Reintentar o escalar según tipo.  
+5. **End Process** – Generar reporte final y liberar recursos.  
 
-2.  **Get Transaction Data**\
-    Obtener ítems de entrada (archivos, registros, requests). Validar
-    datos antes de procesar.
-
-3.  **Process Transaction**\
-    Ejecutar la lógica de negocio para cada ítem.\
-    Devolver estado: `Success`, `BusinessException`, `SystemException`.
-
-4.  **Handle Errors**
-
-    -   **BusinessException:** registrar y marcar ítem como fallo
-        controlado.\
-    -   **SystemException:** reintentar o escalar.\
-        Siempre dejar trazabilidad clara en los logs.
-
-5.  **End Process**\
-    Generar reporte final de ejecución.\
-    Cerrar conexiones, liberar recursos.
 
 ------------------------------------------------------------------------
 
