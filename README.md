@@ -1,4 +1,4 @@
-# 📌 Lineamientos de Desarrollo en Python para Automatizaciones
+# 📌 Lineamientos de Desarrollo en Python para Automatizaciones Comfama
 
 ## 🎯 Objetivo
 
