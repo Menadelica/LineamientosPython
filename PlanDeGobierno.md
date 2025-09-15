@@ -1,143 +1,121 @@
-# 📌 Lineamientos de Desarrollo en Python para Automatizaciones
+# 📜 Lineamientos y Gobernanza para Python en Comfama
 
-## 🎯 Objetivo
+Implementar la gobernanza de **Python** en la arquitectura empresarial implica crear un marco estructurado que asegure un uso **consistente, seguro y eficiente** de la tecnología.  
+Este documento reúne las mejores prácticas, inspiradas en los planes de gobernanza para los CoE de **UiPath** y **PowerPlatform**.
 
-Definir prácticas claras y estandarizadas para el desarrollo de
-automatizaciones en Python, asegurando calidad, mantenibilidad y
-facilidad de soporte, mediante un framework inspirado en el
-**REFramework** de UiPath.
+---
 
-------------------------------------------------------------------------
+## 1️⃣ Políticas y Estándares de Gobernanza
 
-## 🔑 Principios Generales
+### 📌 Definición de Políticas
+- Establecer **políticas claras** sobre uso de Python, buenas prácticas de desarrollo, revisión de código y despliegue.
+- Garantizar que **todo el código cumpla estándares de calidad** con:
+  - **Black** → formateo automático.
+  - **Flake8** → verificación de estándares.
+- Mantener **Python, librerías y modelos de IA actualizados** de forma regular.
 
-### 🧼 Código limpio y legible
+### 🛠 Estandarización de Herramientas y Frameworks
+- **Frameworks para Automatización e IA**:
+  - 🖥 **Robocorp** → RPA.  
+  - 🧠 **TensorFlow**, **PyTorch** → entrenamiento y despliegue de modelos de IA.  
+  - 🤖 **Hugging Face Transformers** → modelos de NLP preentrenados.
+- **Librerías de IA**:
+  - 📊 **Scikit-learn** → ML clásico.  
+  - 🖼 **OpenCV** → visión por computadora.  
+  - 🗣 **NLTK**, **spaCy** → NLP.  
+  - 🔬 **Keras** → redes neuronales.  
+  - 💬 **GPT-3.5 / ChatGPT API** → integración de modelos de lenguaje.
+- **Entornos Virtuales**:
+  - Uso de `venv` o `virtualenv` para aislar dependencias.
+  - Considerar **Poetry** o **Pipenv** para gestión avanzada.
 
--   Cumplir el estándar **PEP8**.
--   Usar nombres descriptivos en variables, clases y funciones.
--   Agregar comentarios solo cuando sean necesarios: el código debe ser
-    autoexplicativo.
+---
 
-### 🧩 Estructura modular
+## 2️⃣ Seguridad y Cumplimiento
 
--   Dividir la lógica en módulos reutilizables.
--   Funciones cortas y con una sola responsabilidad.
+- **Prácticas de codificación segura**:
+  - Prevenir vulnerabilidades (SQL Injection, XSS, etc.).
+  - Mantener dependencias y modelos de IA **actualizados**.
+- **Monitoreo de cumplimiento**:
+  - Escaneo de dependencias y análisis estático de código para garantizar cumplimiento regulatorio.
 
-### 🛠️ Manejo de errores
+---
 
--   Usar `try/except` con logging estructurado.
--   Diferenciar errores de sistema (infraestructura, red, librerías) de
-    errores de negocio (datos inválidos, flujo esperado).
+## 3️⃣ Gestión Centralizada de Repositorios
 
-### ⚙️ Configuración externa
+- **Control de versiones**:
+  - Uso de **Git**, políticas de ramas y revisiones por **Pull Requests**.
+- **Gestión de paquetes**:
+  - Configurar **repositorio privado de PyPI** con Artifactory o Nexus para paquetes internos y modelos.
 
--   No incluir credenciales ni rutas en el código.
--   Usar archivos `.env`, JSON, YAML o variables de entorno.
+---
 
-### 📜 Logs y monitoreo
+## 4️⃣ Automatización y CI/CD
 
--   Implementar logging con niveles (**DEBUG**, **INFO**, **ERROR**).
--   Generar logs fáciles de rastrear para soporte y auditoría.
+- **Pipelines CI/CD**:
+  - Automatizar pruebas, construcción y despliegue con **Jenkins** o **GitHub Actions**.
+- **Pruebas automatizadas**:
+  - Cobertura completa con `pytest`.
+  - Validación de **precisión y rendimiento** de modelos de IA.
 
-### 🧪 Pruebas y calidad
+---
 
--   Escribir pruebas unitarias con **pytest**.
--   Validar en staging antes de pasar a producción.
+## 5️⃣ Monitoreo y Registro
 
-------------------------------------------------------------------------
+- **Monitoreo de aplicaciones**:
+  - Uso de **Prometheus** y **Grafana** para métricas y alertas.
+  - **Sentry** para seguimiento de errores y excepciones.
+- **Registro centralizado**:
+  - Implementar **ELK Stack** o **Splunk** para análisis proactivo de logs.
 
-## 🏗️ Python REFramework (Adaptación)
+---
 
-Estructura base del framework, inspirada en UiPath REFramework:
+## 6️⃣ Capacitación y Soporte
 
-    automation_project/
-    │
-    ├── config/
-    │   ├── settings.json        # Configuración general
-    │   ├── credentials.json     # Credenciales (encriptadas o mock)
-    │
-    ├── data/
-    │   ├── input/               # Archivos de entrada
-    │   └── output/              # Resultados
-    │
-    ├── framework/
-    │   ├── init.py              # Inicialización: logs, configs, colas
-    │   ├── get_transaction.py   # Obtención de ítems a procesar
-    │   ├── process.py           # Lógica principal de negocio
-    │   ├── handle_error.py      # Manejo de excepciones
-    │   └── end.py               # Limpieza y cierre
-    │
-    ├── tests/
-    │   └── test_process.py      # Pruebas unitarias
-    │
-    ├── main.py                  # Punto de entrada
-    └── requirements.txt         # Dependencias
+- **Capacitación continua**:
+  - Sesiones regulares sobre buenas prácticas, seguridad y uso de IA.
+- **Soporte**:
+  - Foros, comunidades y herramientas de IA (como **ChatGPT**) para consultas rápidas.
 
-------------------------------------------------------------------------
+---
 
-## 🔄 Fases del Flujo
+## 7️⃣ Compromiso con Stakeholders y Mejora Continua
 
-1.  **Initialization**\
-    Cargar configuraciones y credenciales. Preparar logging. Verificar
-    dependencias (APIs, DB, rutas de archivos).
+- **Involucramiento de stakeholders**:
+  - Alineación con objetivos de negocio y revisiones periódicas de políticas.
+- **Mejora continua**:
+  - Auditorías y retroalimentación para adaptarse a nuevas tecnologías.
 
-2.  **Get Transaction Data**\
-    Obtener ítems de entrada (archivos, registros, requests). Validar
-    datos antes de procesar.
+---
 
-3.  **Process Transaction**\
-    Ejecutar la lógica de negocio para cada ítem.\
-    Devolver estado: `Success`, `BusinessException`, `SystemException`.
+## 🏗 Arquitectura Recomendada para Proyectos de IA
 
-4.  **Handle Errors**
+### 📥 Capa de Ingestión de Datos
+- **Kafka / RabbitMQ** → ingesta en tiempo real.
+- **AWS S3 / Google Cloud Storage** → almacenamiento de datasets.
 
-    -   **BusinessException:** registrar y marcar ítem como fallo
-        controlado.\
-    -   **SystemException:** reintentar o escalar.\
-        Siempre dejar trazabilidad clara en los logs.
+### 🔄 Capa de Preprocesamiento y ETL
+- **Apache Spark** → procesamiento distribuido.
+- **Python + Pandas** → manipulación de datos ligera.
 
-5.  **End Process**\
-    Generar reporte final de ejecución.\
-    Cerrar conexiones, liberar recursos.
+### 🧠 Capa de Entrenamiento de Modelos
+- **TensorFlow / PyTorch** → modelos complejos.
+- **Scikit-learn** → ML tradicional.
+- **MLflow** → versionado y seguimiento de experimentos.
 
-------------------------------------------------------------------------
+### 🚀 Capa de Despliegue
+- **Flask / FastAPI** → APIs REST para servir modelos.
+- **Docker / Kubernetes** → contenedorización y escalado.
 
-## 📝 Ejemplo simplificado (`main.py`)
+### 📊 Capa de Monitorización
+- **Prometheus / Grafana** → métricas y salud del sistema.
+- **ELK / Splunk** → análisis de logs.
 
-``` python
-from framework import init, get_transaction, process, handle_error, end
+### ♻️ Capa de Reentrenamiento Automático
+- Pipelines en **Airflow / Kubeflow** para reentrenar modelos según datos nuevos o cambios de entorno.
 
-if __name__ == "__main__":
-    config = init.load_config()
-    queue = init.load_queue("data/input/data.csv")
+---
 
-    for item in queue:
-        try:
-            tx = get_transaction.run(item)
-            result = process.run(tx, config)
-            print(f"[OK] {item} -> {result}")
-        except Exception as e:
-            handle_error.run(item, e)
+✅ **Conclusión:**  
+Estos lineamientos aseguran que el uso de Python en la organización sea **escalable, seguro y eficiente**, facilitando la adopción de IA y automatización de manera controlada.
 
-    end.run()
-```
-
-------------------------------------------------------------------------
-
-## 🚦 Buenas Prácticas Adicionales
-
--   **Versionamiento:** usar Git con ramas claras (`feature/`, `fix/`,
-    `release/`).
--   **Entornos virtuales:** crear con `venv` o `poetry`.
--   **Documentación mínima:** incluir `README` con dependencias, pasos
-    de ejecución y diagrama de flujo.
--   **Estandarización:** todos los proyectos deben seguir esta misma
-    estructura.
-
-------------------------------------------------------------------------
-
-## ✅ Conclusión
-
-Este marco asegura que todas las automatizaciones en Python tengan
-**orden**, **trazabilidad**, sean **fáciles de mantener** y permitan
-**escalar de manera segura** dentro del equipo.
